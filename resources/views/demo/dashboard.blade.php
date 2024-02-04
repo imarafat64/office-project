@@ -222,7 +222,7 @@
               @else
               <div class="table-responsive">
                   
-                <table class="table table-vcenter card-table table-striped">
+                <table class="table table-vcenter card-table">
                 <thead>
                     <tr>
                       <th>Title</th>
@@ -241,8 +241,14 @@
                   <tbody>
                     @foreach( $incompleteTodos as $todo)
                     @php
+                        // $todoDate = \Carbon\Carbon::createFromFormat('Y-m-d', $todo->date);
+                        // $daysDifference = $todoDate->diffInDays(now());
+                        // dd($daysDifference);
+                        $currentDateTime = new DateTime();
                         $todoDate = \Carbon\Carbon::createFromFormat('Y-m-d', $todo->date);
-                        $daysDifference = $todoDate->diffInDays(now());
+                        $dateDifference = $currentDateTime->diff($todoDate);
+                        $daysDifference = $dateDifference->days;
+                        // dd($daysDifference);
                     @endphp
                         <tr style="background-color: {{ $daysDifference > 0 ? 'pink' : 'transparent' }}">
                           
@@ -314,9 +320,9 @@
                             <span class="page-link">next &raquo;</span>
                         </li>
                     @endif
-                </ul>
-            </div>
-              </div>
+                    </ul>
+                </div>
+                  </div>
                 @endif
               
               </div>
